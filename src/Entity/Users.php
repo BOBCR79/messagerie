@@ -54,6 +54,7 @@ class Users
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->registered_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
