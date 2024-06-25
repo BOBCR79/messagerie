@@ -43,3 +43,7 @@ Technologies Utilisées
 - Base de données au choix : MySQL ou PostgreSQL
 - Frontend : Twig, HTML5, CSS3 et Bootstrap, JavaScript optionnel
 - Contrôle de version : Git
+
+
+run tailwind
+ php bin/console tailwind:build --watch
