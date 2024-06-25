@@ -11,7 +11,18 @@
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
-    <body>
+    <body class="flex divide-x-2">
+        <header class="w-60 min-h-screen p-5 bg-stone-200">
+            <nav>
+                <ul class="font-medium text-xl leading-12">
+                    <li><a href="" class=" hover:text-lime-900">Accueil</a></li>
+                    <li><a href="" class=" hover:text-lime-900">Publier un message</a></li>
+                    <li><a href="" class=" hover:text-lime-900">Connexion</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
         {% block body %}{% endblock %}
+        </main>
     </body>
 </html>
