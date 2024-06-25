@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+<main>
+    <h1>Poster un message</h1>
+    
+    <form action="{{ path('add_message') }}" method="post">
+        <div>
+            <label for="content">Message :</label>
+            <textarea id="content" name="content" rows="4" required></textarea>
+        </div>
+        <button type="submit">Envoyer</button>
+    </form>
+</main>
+{% endblock %}
