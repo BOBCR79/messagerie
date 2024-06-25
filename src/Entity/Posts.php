@@ -44,6 +44,7 @@ class Posts
     {
         $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->posted_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
