@@ -8,11 +8,13 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CommentController extends AbstractController
 {
-    #[Route('/comment', name: 'app_comment')]
-    public function index(): Response
+    #[Route('/comment/post/{postId}', name: 'app_comment')]
+    public function index(int $postId): Response
     {
+
         return $this->render('comment/index.html.twig', [
             'controller_name' => 'CommentController',
+            'parentPost' => $postId
         ]);
     }
 }

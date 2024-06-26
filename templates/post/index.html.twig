@@ -3,7 +3,7 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-<main>
+
     <h1>Poster un message</h1>
     
     <form action="{{ path('add_message') }}" method="post">
@@ -13,5 +13,5 @@
         </div>
         <button type="submit">Envoyer</button>
     </form>
-</main>
+
 {% endblock %}
