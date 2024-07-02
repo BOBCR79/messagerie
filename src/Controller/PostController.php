@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PostController extends AbstractController
 {
+    // TODO formulaire de nouveau post
     #[Route('/newpost', name: 'app_post')]
     public function index(): Response
     {
@@ -15,4 +16,5 @@ class PostController extends AbstractController
             'controller_name' => 'PostController',
         ]);
     }
+
 }

@@ -17,7 +17,7 @@ class HomeController extends AbstractController
 
     }
 
-
+    // TODO accueil utilisateur connecté
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {

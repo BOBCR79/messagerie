@@ -24,7 +24,7 @@
                 {% if message.commentNumber > 0 %}
                 <a href="/comment/post/{{ message.id }}" class="text-amber-600 text-s">{{ message.commentNumber}} commentaires</a>
                 {% else %}
-                <a href="" class="text-s">ajouter un commentaire</a>
+                <a href="/comment/post/{{ message.id }}" class="text-s">ajouter un commentaire</a>
                 {% endif %}
                 </div>
             </article>

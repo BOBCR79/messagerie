@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class UserController extends AbstractController
 {
+    // TODO affichage profil
     #[Route('/user', name: 'app_user')]
     public function index(): Response
     {
@@ -15,4 +16,6 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
+    // TODO page de connexion
+    // TODO page de création
 }

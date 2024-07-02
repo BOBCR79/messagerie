@@ -60,14 +60,13 @@ class AppFixtures extends Fixture
                     }
                 }
             }
-            
+
         };
         $manager->flush();
-    
+
         $commentList = $manager->getRepository(Comments::class)->findAll();
         //création likes
         foreach($userList as $user){
-            //TODO création likes à partir de users et posts et comments créés
             if (mt_rand(0,3) == 0){
                 foreach ($postList as $post) {
                     if (mt_rand(0,4) == 0){
