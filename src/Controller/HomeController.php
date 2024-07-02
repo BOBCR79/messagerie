@@ -10,9 +10,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController
 {
-    private $userList;
-    private $commentList;
-    private $likeList;
     private $postList;
 
     public function __construct(private PostsRepository $PostsRepository)
@@ -24,12 +21,13 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(): Response
     {
-        $postList = $this->PostsRepository->findAll();
-        
+        $postList = $this->PostsRepository->fetchPostsWithUsername();
+        var_dump($postList[1]);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'messages' => $postList
         ]);
     }
-   
+
 }

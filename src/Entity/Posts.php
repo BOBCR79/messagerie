@@ -130,6 +130,10 @@ class Posts
         return $this;
     }
 
+    public function countComments(): int
+    {
+        return count($comments);
+    }
     /**
      * @return Collection<int, Likes>
      */
@@ -159,5 +163,6 @@ class Posts
 
         return $this;
     }
+    
     
 }
