@@ -11,18 +11,18 @@
     <div class="messages py-5">
         {% for message in messages %}
             <article class="message w-1/2 py-10">
-                <h2><a href=""></a></h2>
+                <h2><a href="">{{ message.username }}</a></h2>
 
-                <p>likes</p>
+                <button>likes</button>
 
                 {% if message.media %}
                 <img src="{{ message.media }}" width="32px" height="28px"/>
                 {%  endif %}
                 <p class=" shadow shadow-gray-400 p-2">{{ message.content }} </p>
                 <div>
-                <p class="text-xs">le: {{ message.postedAt|date('Y-m-d H:i')  }}</p>
-                {% if message.comments %}
-                <a href="/comment/post/{{ message.id }}" class="text-amber-600 text-s">commentaires</a>
+                <p class="text-xs">le: {{ message.posted_at|date('Y-m-d H:i')  }}</p>
+                {% if message.commentNumber > 0 %}
+                <a href="/comment/post/{{ message.id }}" class="text-amber-600 text-s">{{ message.commentNumber}} commentaires</a>
                 {% else %}
                 <a href="" class="text-s">ajouter un commentaire</a>
                 {% endif %}
