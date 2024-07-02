@@ -68,13 +68,14 @@ class AppFixtures extends Fixture
         //création likes
         foreach($userList as $user){
             if (mt_rand(0,3) == 0){
-                foreach ($postList as $post) {
-                    if (mt_rand(0,4) == 0){
+                if (mt_rand(0,6) == 0){
+                        foreach ($postList as $post) {
                         $postLike = new Likes();
                         $postLike->setUserId($user);
                         $postLike->setPostId($post);
                         $manager->persist($postLike);
-                    }elseif (mt_rand(0,4) == 4){
+                        }
+                }elseif (mt_rand(0,6) == 6){
 
                         foreach ($commentList as $comment) {
                             if (mt_rand(0,4) == 0){
@@ -84,7 +85,7 @@ class AppFixtures extends Fixture
                                 $manager->persist($commentLike);
                             }
                         }
-                    }
+                   
 
                 }
             }
