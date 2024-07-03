@@ -29,9 +29,10 @@ class PostsRepository extends ServiceEntityRepository
     public function fetchPostsWithUsername(){
         $qb = $this->createQueryBuilder('p');
 
-        $qb->select('p.id','p.content','p.media', 'p.posted_at', 'u.username','COUNT(c.id) AS commentNumber')
+        $qb->select('p.id','p.content','p.media', 'p.posted_at', 'u.username','COUNT(c.id) AS commentNumber', 'COUNT(l.id) AS likesNumber')
         ->leftJoin('p.user_id','u')
         ->leftJoin('p.comments','c')
+        ->leftJoin('p.likes','l')
         ->groupBy('p.id');
         $query = $qb->getQuery();
         $results = $query->getResult();
