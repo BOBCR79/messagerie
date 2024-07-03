@@ -3,17 +3,21 @@
 {% block title %}Messagerie - nouveau commentaire{% endblock %}
 
 {% block body %}
-
-
-    <div class="inputBloc">
-        <h2>Ajouter un commentaire</h2>
-        <form action="" method="post">
-            <div class="flex flex-col gap-2">
-                <label for="content">Message :</label>
-                <textarea id="content" name="content" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="bg-green-800 text-white font-bold p-3 rounded-lg mt-2">Envoyer</button>
-        </form>
+    <div class="list-comments">
+        <ul class="flex flex-col gap-4 ">
+        {% for comment in comments %}
+            <li class="w-96 rounded shadow-lg p-3">
+                <div class="flex justify-between w-full">
+                    <h2>{{ comment.username }}</h2>
+                    <button title="J'aime">{{ comment.likesNumber }}&#10084;</button>
+                </div>
+                <p class="shadow shadow-gray-400 p-2 overflow-y-scroll">{{ comment.content}}</p>
+                <p class="text-xs text-end">le {{comment.posted_at|date('Y-m-d H:i') }}</p>
+            </li>
+        {% endfor %}
+        </ul>
     </div>
+
+    {{ form(comment_form) }}
 
 {% endblock %}
