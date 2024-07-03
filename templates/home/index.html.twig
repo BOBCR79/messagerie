@@ -12,14 +12,19 @@
         {% for message in messages %}
             <article class="message w-1/2 py-10">
                 <h2><a href="">{{ message.username }}</a></h2>
+                {% if message.likesNumber > 0 %}
+                <button class="like-btn">{{ message.likesNumber }} &#10084;</button>
+                {% else %}
+                <button class="like-btn">&#10084;</button>
 
-                <button>likes</button>
+                {% endif %}
 
                 {% if message.media %}
                 <img src="{{ message.media }}" width="32px" height="28px"/>
                 {%  endif %}
                 <p class=" shadow shadow-gray-400 p-2">{{ message.content }} </p>
-                <div>
+                <div class="flex justify-between">
+
                 <p class="text-xs">le: {{ message.posted_at|date('Y-m-d H:i')  }}</p>
                 {% if message.commentNumber > 0 %}
                 <a href="/comment/post/{{ message.id }}" class="text-amber-600 text-s">{{ message.commentNumber}} commentaires</a>
