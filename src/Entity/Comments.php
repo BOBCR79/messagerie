@@ -19,6 +19,9 @@ class Comments
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $posted_at = null;
+    
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Users $user_id = null;
 

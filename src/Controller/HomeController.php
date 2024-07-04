@@ -22,8 +22,6 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $postList = $this->PostsRepository->fetchPostsWithUsername();
-        var_dump($postList[1]);
-
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'messages' => $postList
