@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{'messenger'|trans}} - {{'new_comment'|trans}}{% endblock %}
+
+{% block body %}
+{{ form(comment_form, {'method': 'POST'}) }}
+{% endblock %}

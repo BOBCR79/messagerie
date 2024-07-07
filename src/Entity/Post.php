@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\PostsRepository;
+use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PostsRepository::class)]
-class Posts
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+class Post
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,26 +24,35 @@ class Posts
     #[ORM\Column]
     private ?\DateTimeImmutable $posted_at = null;
 
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'post_id')]
+    private Collection $likes;
+
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id = null;
+    private ?User $user_id = null;
 
     /**
-     * @var Collection<int, Comments>
+     * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comments::class, mappedBy: 'post_id', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post_id', orphanRemoval: true)]
     private Collection $comments;
 
+<<<<<<< Updated upstream:src/Entity/Posts.php
     /**
      * @var Collection<int, Likes>
      */
     #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'post_id')]
     private Collection $likes;
 
+=======
+>>>>>>> Stashed changes:src/Entity/Post.php
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
         $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
         $this->posted_at = new \DateTimeImmutable();
     }
 
@@ -88,61 +97,15 @@ class Posts
         return $this;
     }
 
-    public function getUserId(): ?Users
-    {
-        return $this->user_id;
-    }
-
-    public function setUserId(?Users $user_id): static
-    {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Comments>
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): static
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setPostId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): static
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getPostId() === $this) {
-                $comment->setPostId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function countComments(): int
-    {
-        return count($comments);
-    }
-    /**
-     * @return Collection<int, Likes>
+     * @return Collection<int, Like>
      */
     public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function addLike(Likes $like): static
+    public function addLike(Like $like): static
     {
         if (!$this->likes->contains($like)) {
             $this->likes->add($like);
@@ -152,7 +115,7 @@ class Posts
         return $this;
     }
 
-    public function removeLike(Likes $like): static
+    public function removeLike(Like $like): static
     {
         if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
@@ -163,6 +126,51 @@ class Posts
 
         return $this;
     }
+<<<<<<< Updated upstream:src/Entity/Posts.php
     
     
+=======
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPostId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPostId() === $this) {
+                $comment->setPostId(null);
+            }
+        }
+
+        return $this;
+    }
+>>>>>>> Stashed changes:src/Entity/Post.php
 }

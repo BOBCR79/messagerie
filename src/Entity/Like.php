@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\LikesRepository;
+use App\Repository\LikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: LikesRepository::class)]
-class Likes
+#[ORM\Entity(repositoryClass: LikeRepository::class)]
+#[ORM\Table(name: '`like`')]
+class Like
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,49 +16,49 @@ class Likes
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user_id = null;
+    private ?User $user_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
-    private ?Posts $post_id = null;
+    private ?Post $post_id = null;
 
     #[ORM\ManyToOne(inversedBy: 'likes')]
-    private ?Comments $comment_id = null;
+    private ?Comment $comment_id = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUserId(): ?Users
+    public function getUserId(): ?User
     {
         return $this->user_id;
     }
 
-    public function setUserId(?Users $user_id): static
+    public function setUserId(?User $user_id): static
     {
         $this->user_id = $user_id;
 
         return $this;
     }
 
-    public function getPostId(): ?Posts
+    public function getPostId(): ?Post
     {
         return $this->post_id;
     }
 
-    public function setPostId(?Posts $post_id): static
+    public function setPostId(?Post $post_id): static
     {
         $this->post_id = $post_id;
 
         return $this;
     }
 
-    public function getCommentId(): ?Comments
+    public function getCommentId(): ?Comment
     {
         return $this->comment_id;
     }
 
-    public function setCommentId(?Comments $comment_id): static
+    public function setCommentId(?Comment $comment_id): static
     {
         $this->comment_id = $comment_id;
 

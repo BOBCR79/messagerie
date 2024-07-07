@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controller;
-use App\Repository\CommentsRepository;
-use App\Entity\Comments;
+use App\Repository\CommentRepository;
+use App\Entity\Comment;
 use App\Form\CommentType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CommentController extends AbstractController
 {
-    public function __construct(private CommentsRepository $CommentsRepository)
+    public function __construct(private CommentRepository $CommentRepository)
     {
 
     }
@@ -21,24 +21,27 @@ class CommentController extends AbstractController
 
         //TODO verif si user connecte, si non, masquer inputs
 
-        $commentsList = $this->CommentsRepository->fetchComments($postId);
+        $commentsList = $this->CommentRepository->fetchComments($postId);
+        $count = count($commentsList);
+        
+        return $this->render('comment/index.html.twig', [
+            'comments' => $commentsList,
+            'count' => $count,
+            'parentPost' => $postId,
 
-        $comment = new Comments();
+        ]);
+    }
+
+
+    #[Route('/comment/{postId}/new', name: 'app_new_comment')]
+    public function new(int $postId): Response
+    {
+        $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
 
-
-        $form->handleRequest($request);
-        if ($form->isSubmited() && $form->isValid())
-        {
-           //TODO insertion, persist & flush
-        }
-
-        return $this->render('comment/index.html.twig', [
-            'controller_name' => 'CommentController',
-            'comments' => $commentsList,
-            'parentPost' => $postId,
+        return $this->render('comment/new.html.twig', [
             'comment_form' => $form
         ]);
     }
-    
+
 }

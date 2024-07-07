@@ -2,37 +2,36 @@
 
 namespace App\Repository;
 
-use App\Entity\Comments;
+use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Comments>
+ * @extends ServiceEntityRepository<Comment>
  */
-class CommentsRepository extends ServiceEntityRepository
+class CommentRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Comments::class);
+        parent::__construct($registry, Comment::class);
     }
-    
-    public function fetchComments(int $postId){
+    public function fetchComments(int $postId)
+    {
         $qb = $this->createQueryBuilder('c');
 
-        $qb->select('c.id','c.content','c.posted_at', 'u.username', 'COUNT(l.id) AS likesNumber')
-        ->leftJoin('c.user_id','u')
-        ->leftJoin('c.likes','l')
-        ->groupBy('c.id')
-        ->where('c.post_id = :post')
-        ->setParameter('post', $postId);
+        $qb->select('c.id', 'c.content', 'c.posted_at', 'u.username', 'COUNT(DISTINCT l.id) AS likesNumber')
+            ->leftJoin('c.user_id', 'u')
+            ->leftJoin('c.likes', 'l')
+            ->groupBy('c.id')
+            ->where('c.post_id = :post')
+            ->setParameter('post', $postId);
         $query = $qb->getQuery();
         $results = $query->getResult();
 
         return $results;
     }
-
     //    /**
-    //     * @return Comments[] Returns an array of Comments objects
+    //     * @return Comment[] Returns an array of Comment objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -46,7 +45,7 @@ class CommentsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Comments
+    //    public function findOneBySomeField($value): ?Comment
     //    {
     //        return $this->createQueryBuilder('c')
     //            ->andWhere('c.exampleField = :val')

@@ -2,46 +2,36 @@
 
 namespace App\Repository;
 
-use App\Entity\Posts;
+use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Posts>
+ * @extends ServiceEntityRepository<Post>
  */
-class PostsRepository extends ServiceEntityRepository
+class PostRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Posts::class);
+        parent::__construct($registry, Post::class);
     }
 
-    public function getPostPaginator(int $offset): Paginator
+    public function fetchPostsWithUsername()
     {
-        $query = $this->createQueryBuilder('p')
-            ->setMaxResults(maxResults: self::PAGINATOR_PER_PAGE)
-            ->setFirstResult($offset)
-            ->getQuery();
-        return new Paginator($query);
-    }
-
-    public function fetchPostsWithUsername(){
         $qb = $this->createQueryBuilder('p');
 
-        $qb->select('p.id','p.content','p.media', 'p.posted_at', 'u.username','COUNT(c.id) AS commentNumber', 'COUNT(l.id) AS likesNumber')
-        ->leftJoin('p.user_id','u')
-        ->leftJoin('p.comments','c')
-        ->leftJoin('p.likes','l')
-        ->groupBy('p.id');
+        $qb->select('p.id', 'p.content', 'p.media', 'p.posted_at', 'u.username', 'COUNT(DISTINCT c.id) AS commentNumber', 'COUNT(DISTINCT l.id) AS likesNumber')
+            ->leftJoin('p.user_id', 'u')
+            ->leftJoin('p.comments', 'c')
+            ->leftJoin('p.likes', 'l')
+            ->groupBy('p.id');
         $query = $qb->getQuery();
         $results = $query->getResult();
 
         return $results;
     }
-
     //    /**
-    //     * @return Posts[] Returns an array of Posts objects
+    //     * @return Post[] Returns an array of Post objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -55,7 +45,7 @@ class PostsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Posts
+    //    public function findOneBySomeField($value): ?Post
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')
@@ -64,5 +54,4 @@ class PostsRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-
 }

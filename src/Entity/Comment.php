@@ -2,35 +2,43 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentsRepository;
+use App\Repository\CommentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommentsRepository::class)]
-class Comments
+#[ORM\Entity(repositoryClass: CommentRepository::class)]
+class Comment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 255)]
     private ?string $content = null;
 
+<<<<<<< Updated upstream:src/Entity/Comments.php
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Users $user_id = null;
+=======
+    #[ORM\Column]
+    private ?\DateTimeImmutable $posted_at = null;
+
+    /**
+     * @var Collection<int, Like>
+     */
+    #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'comment_id')]
+    private Collection $likes;
+>>>>>>> Stashed changes:src/Entity/Comment.php
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Posts $post_id = null;
+    private ?User $user_id = null;
 
-    /**
-     * @var Collection<int, Likes>
-     */
-    #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'comment_id')]
-    private Collection $likes;
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Post $post_id = null;
 
     public function __construct()
     {
@@ -55,39 +63,27 @@ class Comments
         return $this;
     }
 
-    public function getUserId(): ?Users
+    public function getPostedAt(): ?\DateTimeImmutable
     {
-        return $this->user_id;
+        return $this->posted_at;
     }
 
-    public function setUserId(?Users $user_id): static
+    public function setPostedAt(\DateTimeImmutable $posted_at): static
     {
-        $this->user_id = $user_id;
-
-        return $this;
-    }
-
-    public function getPostId(): ?Posts
-    {
-        return $this->post_id;
-    }
-
-    public function setPostId(?Posts $post_id): static
-    {
-        $this->post_id = $post_id;
+        $this->posted_at = $posted_at;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Likes>
+     * @return Collection<int, Like>
      */
     public function getLikes(): Collection
     {
         return $this->likes;
     }
 
-    public function addLike(Likes $like): static
+    public function addLike(Like $like): static
     {
         if (!$this->likes->contains($like)) {
             $this->likes->add($like);
@@ -97,7 +93,7 @@ class Comments
         return $this;
     }
 
-    public function removeLike(Likes $like): static
+    public function removeLike(Like $like): static
     {
         if ($this->likes->removeElement($like)) {
             // set the owning side to null (unless already changed)
@@ -105,6 +101,30 @@ class Comments
                 $like->setCommentId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getPostId(): ?Post
+    {
+        return $this->post_id;
+    }
+
+    public function setPostId(?Post $post_id): static
+    {
+        $this->post_id = $post_id;
 
         return $this;
     }
