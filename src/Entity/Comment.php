@@ -18,10 +18,6 @@ class Comment
     #[ORM\Column(length: 255)]
     private ?string $content = null;
 
-<<<<<<< Updated upstream:src/Entity/Comments.php
-    #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?Users $user_id = null;
-=======
     #[ORM\Column]
     private ?\DateTimeImmutable $posted_at = null;
 
@@ -30,7 +26,6 @@ class Comment
      */
     #[ORM\OneToMany(targetEntity: Like::class, mappedBy: 'comment_id')]
     private Collection $likes;
->>>>>>> Stashed changes:src/Entity/Comment.php
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]

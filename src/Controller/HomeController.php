@@ -19,13 +19,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
-<<<<<<< Updated upstream
-        $postList = $this->PostsRepository->fetchPostsWithUsername();
-        var_dump($postList[1]);
-
-=======
         $postList = $this->PostRepository->fetchPostsWithUsername();
->>>>>>> Stashed changes
         return $this->render('home/index.html.twig', [
             'messages' => $postList
         ]);

@@ -15,9 +15,4 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
-<<<<<<< Updated upstream
-    // TODO page de connexion
-    // TODO page de création
-=======
->>>>>>> Stashed changes
 }

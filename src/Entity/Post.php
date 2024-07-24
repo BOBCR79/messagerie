@@ -40,15 +40,6 @@ class Post
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post_id', orphanRemoval: true)]
     private Collection $comments;
 
-<<<<<<< Updated upstream:src/Entity/Posts.php
-    /**
-     * @var Collection<int, Likes>
-     */
-    #[ORM\OneToMany(targetEntity: Likes::class, mappedBy: 'post_id')]
-    private Collection $likes;
-
-=======
->>>>>>> Stashed changes:src/Entity/Post.php
     public function __construct()
     {
         $this->likes = new ArrayCollection();
@@ -126,10 +117,6 @@ class Post
 
         return $this;
     }
-<<<<<<< Updated upstream:src/Entity/Posts.php
-    
-    
-=======
 
     public function getUserId(): ?User
     {
@@ -172,5 +159,4 @@ class Post
 
         return $this;
     }
->>>>>>> Stashed changes:src/Entity/Post.php
 }
