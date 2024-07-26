@@ -15,7 +15,7 @@ h1{
         {% for message in messages %}
             <article class="message w-1/2 py-10">
                 <div class="flex justify-between">
-                    <h2><a href="">{{ message.username }}</a></h2>
+                    <h2><a href="/user/{{ message.username }}">{{ message.username }}</a></h2>
                     {% if message.likesNumber > 0 %}
                     <button class="like-btn">{{ message.likesNumber }} &#10084;</button>
                     {% else %}
